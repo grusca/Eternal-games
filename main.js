@@ -1,6 +1,6 @@
 'use strict'
 
-function main(){
+function main() {
 
     const mainElement = document.querySelector('main');
 
@@ -17,20 +17,20 @@ function main(){
                 <button class="start-button">Start</button>
             </section>
             `);
+            
         const startButton = document.querySelector('.start-button');
-
+        
         startButton.addEventListener('click', buildGameScreen);
     }
 
     function buildGameScreen () {
         const gameScreen = buildDom(`
-        <section class='game-container'>
+        <section class="game-container">
             <canvas></canvas>
         </section>
         `);
 
         const gameContainerElement = document.querySelector('.game-container')
-
 
         const width = gameContainerElement.offsetWidth;
         const height = gameContainerElement.offsetHeight;
@@ -40,37 +40,41 @@ function main(){
         canvasElement.setAttribute('width', width);
         canvasElement.setAttribute('height', height);
 
+
         const game = new Game(canvasElement);
         game.startLoop();
+        game.setGameOverCallback(buildGameOverScreen);
 
-document.addEventListener('keydown', function (event) {
-    console.log(event.keycode)
-    if (even.keycode === 30) {
-        game.player.setDirection(-1)
-    } else if (event.keycode === 40) {
-        game.player.setDirection(1)
-        
-    })
-}
-
-        setTimeout(buildGameOverScreen,3000);
-
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 38) {
+                game.player.setDirection(-1)
+            } else if (event.keyCode === 40) {
+                game.player.setDirection(1)
+            }
+         })
+    
+        document.addEventListener('keyup', function(event){
+            if(event.keyCode === 38 || event.keyCode === 40) {
+                game.player.setDirection(0);
+            }
+        })
     }
 
-    function buildGameOverScreen () {
-        const GameOverScreen = buildDom(`
+    function buildGameOverScreen() {
+        const gameOverScreen = buildDom(`
             <section>
                 <h1>Game Over</h1>
                 <button class="restart-button">Restart</button>
-
             </section>
         `)
 
     const restartButton = document.querySelector('.restart-button')
+    
     restartButton.addEventListener ('click', buildGameScreen);
 
     }
-    buildSplashScreen()
+
+    buildSplashScreen();
 }
 
-window.addEventListener('load',main)
+window.addEventListener('load', main)
