@@ -2,12 +2,12 @@
 
 function main(){
 
-const mainElement = document.querySelector('main');
+    const mainElement = document.querySelector('main');
 
-function buildDom(html) {
-    mainElement.innerHTML = html;
-    return mainElement;
-}
+    function buildDom(html) {
+        mainElement.innerHTML = html;
+        return mainElement;
+    }
 
 
     function buildSplashScreen () {
@@ -21,6 +21,7 @@ function buildDom(html) {
 
         startButton.addEventListener('click', buildGameScreen);
     }
+
     function buildGameScreen () {
         const gameScreen = buildDom(`
         <section class='game-container'>
@@ -42,10 +43,20 @@ function buildDom(html) {
         const game = new Game(canvasElement);
         game.startLoop();
 
+document.addEventListener('keydown', function (event) {
+    console.log(event.keycode)
+    if (even.keycode === 30) {
+        game.player.setDirection(-1)
+    } else if (event.keycode === 40) {
+        game.player.setDirection(1)
+        
+    })
+}
 
-        setTimeout(buildGameOverScreen,3000) ;
+        setTimeout(buildGameOverScreen,3000);
 
     }
+
     function buildGameOverScreen () {
         const GameOverScreen = buildDom(`
             <section>
@@ -60,8 +71,6 @@ function buildDom(html) {
 
     }
     buildSplashScreen()
-
-
 }
 
 window.addEventListener('load',main)
